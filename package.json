@@ -20,11 +20,15 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "vue": "^2.5.17"
+        "vue": "^2.5.17",
+        "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "element-ui": "^2.7.2",
         "validate.js": "^0.12.0",
-        "vue-router": "^3.0.1",
-        "vuex": "^3.0.1"
+        "vue-organization-chart": "^1.1.0",
+        "vue-router": "^3.0.2",
+        "vuetify": "^1.5.9",
+        "vuex": "^3.1.0"
     }
 }

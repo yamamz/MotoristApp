@@ -16,15 +16,17 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('fullname');
+            $table->string('first_name');
+            $table->string('middle_name')->nullable();
+            $table->string('last_name');
             $table->string('mobile_no');
             $table->integer('age');
             $table->string('address');
             $table->date('birthdate');
             $table->float('registration')->default(0.0);
-            $table->integer('monthly_amortization_id');
+            $table->float('monthly_amortization');
             NestedSet::columns($table);
-            $table->integer('matrix_position');
+            $table->integer('matrix_position')->nullable();
             $table->timestamps();
         });
     }
