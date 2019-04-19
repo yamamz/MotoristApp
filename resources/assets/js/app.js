@@ -46,14 +46,29 @@ Vue.use(ServerTable, {}, false, 'bootstrap4');
 Vue.use(Event)
 
 
-import Tree from '../../srcVued3'
-//import './index.scss'
+import VeeValidate from 'vee-validate';
 
-Vue.use(Tree)
+const config = {
+  aria: true,
+  classNames: {},
+  classes: false,
+  delay: 0,
+  dictionary: null,
+  errorBagName: 'errors', // change if property conflicts
+  events: 'input|blur',
+  fieldsBagName: 'formFields',
+  i18n: null, // the vue-i18n plugin instance
+  i18nRootKey: 'validations', // the nested key under which the validation messages will be located
+  inject: true,
+  locale: 'en',
+  validity: false,
+  useConstraintAttrs: true
+};
 
-import Vue2OrgTree from 'vue2-org-tree/dist'
+Vue.use(VeeValidate, config);
 
-Vue.use(Vue2OrgTree)
+
+
 
 
 Vue.use(Vuetify)

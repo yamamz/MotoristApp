@@ -8,4 +8,9 @@ class Member extends Model
 {
     protected $guarded=[];
     use NodeTrait;
+
+    public function motorRelease()
+    {
+        return $this->hasOne('App\MotorRelease');
+    }
 }

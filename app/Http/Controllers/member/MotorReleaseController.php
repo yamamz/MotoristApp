@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\member;
 use App\Http\Controllers\Controller;
 use App\MotorRelease;
+use App\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -39,14 +40,28 @@ class MotorReleaseController extends Controller
 
     public function store(Request $request)
     {
+        // $table->float('monthly_due')->nullable();
+        // $table->date('date_recieved')->nullable();
+        // $table->string('due_date')->nullable();
+        // $table->boolean('is_loan')->nullable();
+
+        $date=date_create($request->date_recieved);
+        $date_format=date_format($date,"Y/m/d");
         $attrs=[
                 'member_id'=>$request->member_id,
                 'down_payment'=>$request->down_payment,
-                'motor_brand'=>$request->motor_brand
+                'motor_id'=>$request->motor_id,
+                'monthly_due'=>$request->monthly_due,
+                'due_date'=>$request->due_date,
+                'date_recieved'=>$date_format,
+                'is_loan'=>$request->is_loan,
         ];
-        $member=MotorRelease::create($attrs);
+        $release=MotorRelease::create($attrs);
 
-        return $member;
+        $member=Member::find($release->member_id);
+        $member->className="Release";
+        $member->save();
+        return $release;
     }
 
     /**

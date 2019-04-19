@@ -2,7 +2,7 @@ export default {
   items: [
     {
       name: 'Dashboard',
-      url: '/dashboard',
+      url: '/',
       icon: 'icon-speedometer',
       // badge: {
       //   variant: 'primary',
@@ -21,23 +21,37 @@ export default {
         {
           name: 'members',
           url: '/member',
-          icon: 'icon-puzzle'
+          icon: 'icon-list'
         },
         {
           name: 'member add',
           url: '/member/add',
-          icon: 'icon-puzzle'
+          icon: 'icon-notebook'
         },
         
       ]
     },
     {
       name: 'Accounting',
-      url: '/acounting',
+      url: '/accounting',
       icon: 'icon-calculator',
       badge: {
         variant: 'danger',
-      }
+      },
+      children: [
+        {
+          name: 'loan',
+          url: '/accounting/loans',
+          icon: 'icon-list'
+        },
+        {
+          name: 'addloan',
+          url: '/accounting/addloan',
+          icon: 'icon-notebook'
+        },
+        
+        
+      ]
     },
     {
       name: 'Reports',
@@ -52,8 +66,8 @@ export default {
       name: 'Extra'
     },
     {
-      name: 'Seetings',
-      url: '/pages',
+      name: 'Settings',
+      url: '/Settings',
       icon: 'icon-star',
       children: [
         {
@@ -64,6 +78,11 @@ export default {
         {
           name: 'Register',
           url: '/register',
+          icon: 'icon-star'
+        },
+        {
+          name: 'Motor',
+          url: '/settings/motors',
           icon: 'icon-star'
         },
        

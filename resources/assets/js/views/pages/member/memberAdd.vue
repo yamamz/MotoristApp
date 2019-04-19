@@ -2,7 +2,8 @@
   <div>
 
     <el-card>
-      <el-form label-position="top">
+      <h5>Add Member</h5>
+      <el-form label-position="top" size="small">
         <el-row :gutter="5">
           <el-col :md="8">
             <el-form-item label="First Name">
@@ -49,13 +50,12 @@
                 placeholder="Please Select Monthly"
               v-model="form.monthly_amortization">
                 <el-option v-for="(val,index) in monthly_amortization" :key="index" :value="val">
-
                 </el-option>
               </el-select>
             </el-form-item>
            </el-col>
            <el-col :md="8">
-          <el-form-item label="Upline"   >
+          <el-form-item label="Upline">
               <el-select style="width:100%;" 
               placeholder="Please Select you Upline"
               v-model="form.parent_id">
@@ -65,22 +65,21 @@
             </el-form-item>
            </el-col>
               <el-col :md="8">
-                  <el-form-item label="Donation Fee">
+                  <el-form-item label="Membership Donation Fee">
               <el-input type="number" v-model="form.registration"></el-input>
             </el-form-item>
            </el-col>
            
                <el-col :md="8">
-          <el-form-item label="Image Avatar" placeholder="Please Select your Avatar">
-              <el-select style="width:100%;" v-model="form.image">
+          <el-form-item label="Gender">
+              <el-select style="width:100%;" v-model="form.image"  placeholder="Select Gender">
                 <el-option v-for="(val,index) in image_avatars" :key="index" :label="val.label" :value="val.value">
-
                 </el-option>
               </el-select>
             </el-form-item>
            </el-col>
            <el-col :md="8">
-             <el-button @click="saveMember" type="success">Add Member</el-button>
+              <el-button @click="saveMember" type="success" size="small">Add Member</el-button>
            </el-col>
         </el-row>
       </el-form>

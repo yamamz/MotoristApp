@@ -38,6 +38,7 @@ Route::group([
     'middleware' => 'jwt.auth',
 ], function ($router) {
     Route::post('member/create', 'member\MemberController@store');
+    Route::post('member/edit/{id}', 'member\MemberController@update');
     Route::get('member/all', 'member\MemberController@index');
     Route::get('member/all/tree', 'member\MemberController@getAllTree');
     Route::get('member/get/treeFlat/{id}', 'member\MemberController@getNodeToTreeFlat');
@@ -49,7 +50,13 @@ Route::group([
     Route::get('motorrelease/all', 'member\MotorReleaseController@index');
     Route::post('motor/create', 'member\MotorController@store');
     Route::get('motor/all', 'member\MotorController@index');
+
+    Route::post('memberloan/create', 'accounting\MemberLoanController@store');
+    Route::get('memberloan/all', 'accounting\MemberLoanController@index');
 });
+
+Route::post('user/create', 'Auth\RegisterController@register');
+
 
 
 

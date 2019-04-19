@@ -2,8 +2,15 @@
 <div>
 <el-card>
  <v-client-table :data="members" :columns="headers">
-    <el-button slot="Actions" slot-scope="props" size="mini" @click="viewChart(props.row.id)" type="danger">view</el-button>
- </v-client-table>
+    <template slot="Actions" slot-scope="props">
+      <div>
+        <el-button  size="mini" icon="el-icon-view" circle @click="viewChart(props.row.id)" type="primary"></el-button>
+    <el-button  size="mini" icon="el-icon-edit" circle @click="editMember(props.row.id)" type="success"></el-button>
+      </div>
+    </template>
+    
+ 
+   </v-client-table>
 </el-card>
      
 
@@ -26,8 +33,8 @@
       viewChart(member){
         this.$router.push('/member/chart/'+member)
       },
-      editItem(member){
-
+      editMember(member){
+  this.$router.push('/member/edit/'+member)
       }
     },
     created(){

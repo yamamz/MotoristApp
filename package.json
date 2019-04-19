@@ -23,7 +23,7 @@
     },
     "dependencies": {
         "@c42/vue-orgchart": "^0.2.0",
-        "bootstrap-vue": "^0.20.1",
+        "bootstrap-vue": "^2.0.0-rc.18",
         "chart.js": "2.6.0",
         "d3": "^5.9.2",
         "element-ui": "^2.7.2",
@@ -31,6 +31,7 @@
         "html2canvas": "^1.0.0-rc.1",
         "jspdf": "^1.5.3",
         "simple-line-icons": "^2.4.1",
+        "vee-validate": "^2.2.3",
         "vue-chartjs": "2.8.1",
         "vue-organization-chart": "^1.1.2",
         "vue-router": "^2.7.0",
