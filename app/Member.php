@@ -13,4 +13,8 @@ class Member extends Model
     {
         return $this->hasOne('App\MotorRelease');
     }
+
+    public function loans(){
+        return $this->hasMany('App\MemberLoan');
+    }
 }

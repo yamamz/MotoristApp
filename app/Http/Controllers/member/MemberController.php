@@ -62,6 +62,15 @@ public function update(Request $request, $id){
         return $member;
 }
 
+public function searchbyName(Request $request)
+{
+    $fullname=$request->first_name.' '.$request->last_name;
+    $isExist=Member::where('title',$fullname)->exists();
+
+    return response()->json([
+        "exist" => $isExist
+    ], 200);
+}
 
 public function store(Request $request)
 {

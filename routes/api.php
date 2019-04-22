@@ -44,6 +44,8 @@ Route::group([
     Route::get('member/get/treeFlat/{id}', 'member\MemberController@getNodeToTreeFlat');
     Route::get('member/get/{id}','member\MemberController@getNodeToTree');
     Route::get('member/show/{id}','member\MemberController@show');
+    Route::post('member/searchByName', 'member\MemberController@searchbyName');
+    
 
     
     Route::post('motorrelease/create', 'member\MotorReleaseController@store');

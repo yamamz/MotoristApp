@@ -17,8 +17,8 @@ class MemberLoanController extends Controller
      */
     public function index()
     {
-       $loans=MemberLoan::all();
-       return $loans;
+       $loans=MemberLoan::with('member')->get();
+       return $loans->toArray();
     }
 
     /**
@@ -37,6 +37,11 @@ class MemberLoanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     public function memberHasLoan()
+     {
+         
+     }
 
     public function store(Request $request)
     {

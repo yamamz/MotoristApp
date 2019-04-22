@@ -41,11 +41,13 @@ export default new Router({
       redirect: '/',
       name: 'Home',
       component: Full,
+      meta: { requiresAuth: true},
       children: [
         {
           path: '',
           name: 'Dashboard',
-          component: Dashboard
+          component: Dashboard,
+          meta: { requiresAuth: true},
         },    
       ]
     },
