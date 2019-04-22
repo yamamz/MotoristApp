@@ -62,6 +62,7 @@
               <el-select
                 style="width:100%;"
                 placeholder="Please Select you Upline"
+                filterable
                 v-model="form.parent_id"
               >
                 <el-option
