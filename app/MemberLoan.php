@@ -11,4 +11,8 @@ class MemberLoan extends Model
     public function member(){
         return $this->belongsTo('App\Member');
     }
+    public function loanPayments()
+    {
+        return $this->hasMany('App\LoanPayment');
+    }
 }

@@ -55,6 +55,12 @@ Route::group([
 
     Route::post('memberloan/create', 'accounting\MemberLoanController@store');
     Route::get('memberloan/all', 'accounting\MemberLoanController@index');
+    Route::get('memberloan/show/{id}', 'accounting\MemberLoanController@show');
+
+    Route::post('loanpayment/create', 'accounting\LoanPaymentController@store');
+    Route::get('loanpayment/all', 'accounting\LoanPaymentController@index');
+
+    
 });
 
 Route::post('user/create', 'Auth\RegisterController@register');

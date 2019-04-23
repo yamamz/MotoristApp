@@ -17,7 +17,7 @@ class MemberLoanController extends Controller
      */
     public function index()
     {
-       $loans=MemberLoan::with('member')->get();
+       $loans=MemberLoan::with('member','loanPayments')->get();
        return $loans->toArray();
     }
 
@@ -69,7 +69,8 @@ class MemberLoanController extends Controller
      */
     public function show($id)
     {
-        //
+        $loan=MemberLoan::with('member','loanPayments')->find($id);
+        return $loan->toArray();
     }
 
     /**

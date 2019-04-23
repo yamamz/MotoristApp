@@ -57,6 +57,7 @@
            <el-col :md="8">
           <el-form-item label="Upline">
               <el-select style="width:100%;" 
+              filterable
               placeholder="Please Select you Upline"
               v-model="form.parent_id">
                     <el-option v-for="(val,index) in filterParent" :key="index"  :label="`${val.name} ${val.first_name} ${val.last_name}`" :value="val.id">
@@ -174,13 +175,21 @@ export default {
   methods:{
     saveMember(){
       axios.post('/api/member/edit/'+this.$route.params.memberid,this.form).then(res=>{
-        console.log(res.data)
-          this.$swal({
+          if(res.data.ok == true){
+                      this.$swal({
             type: 'success',
             title: 'Save',
             text: 'Save Member Successfully!'
         });
         this.$router.push('/member')
+          }else{
+            this.$swal({
+            type: 'error',
+            title: 'error',
+            text: 'Upline is in binary form!'
+        });
+          }
+
       }).catch(err=>{
          this.$swal({
             type: 'error',

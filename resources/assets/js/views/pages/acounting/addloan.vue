@@ -115,7 +115,7 @@ export default {
             getDay(){
             let day=this.form.date_release.getDate()
             console.log(day)
-            this.form.due_date= "Every "+day+" of the Month"
+            this.form.due_date= "Every "+day+" day of the Month"
         },
         changeInterest(){
             console.log(this.form.term_id)

@@ -5,9 +5,8 @@
              <v-client-table :options="options" :data="loans" :columns="headers">
     <template slot="Actions" slot-scope="props">
       <div>
-        <el-button  size="mini" icon="el-icon-view" circle @click="viewChart(props.row.id)" type="primary"></el-button>
-    <el-button  size="mini" icon="el-icon-edit" circle @click="editMember(props.row.id)" type="success"></el-button>
-      </div>
+        <el-button  size="mini" icon="el-icon-view" circle @click="viewDetails(props.row.id)" type="primary"></el-button>
+       </div>
     </template>
     
  
@@ -39,6 +38,11 @@ export default {
             this.loans=res.data
             console.log(res.data)
         }).catch(err=>console.log(err))
+    },
+    methods:{
+      viewDetails(id){
+             this.$router.push('/accounting/loan/'+id)
+      }
     }
 }
 </script>

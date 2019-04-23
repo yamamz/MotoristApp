@@ -50,7 +50,7 @@
               <h4>Paid Months</h4>
             </el-col>
             <el-col :md="8" style="color:blue;  text-align: right;">
-              <h4>{{downlinesCount}}</h4>
+              <h4>0</h4>
             </el-col>
           </el-row>
           <el-row :gutter="5">

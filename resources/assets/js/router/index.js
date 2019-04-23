@@ -16,6 +16,7 @@ import AddMember from '@/views/pages/member/memberAdd'
 import Chart from '@/views/pages/member/chartOrg'
 import EditMember from '@/views/pages/member/edit'
 import Loan from '@/views/pages/acounting/loan'
+import LoanDetails from '@/views/pages/acounting/loanDetails'
 import AddLoan from '@/views/pages/acounting/addloan'
 
 
@@ -78,6 +79,7 @@ export default new Router({
         },   
       ]
     },
+    
 
     {
       path: '/accounting',
@@ -94,6 +96,11 @@ export default new Router({
           path: 'addloan',
           name: 'addloan',
           component: AddLoan
+        }, 
+        {
+          path: 'loan/:loanid',
+          name: 'addloan',
+          component: LoanDetails
         }, 
  
  
