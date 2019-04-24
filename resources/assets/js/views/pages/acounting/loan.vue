@@ -6,6 +6,8 @@
     <template slot="Actions" slot-scope="props">
       <div>
         <el-button  size="mini" icon="el-icon-view" circle @click="viewDetails(props.row.id)" type="primary"></el-button>
+        <el-button  size="mini" icon="el-icon-edit" circle @click="editLoan(props.row.id)" type="success"></el-button>
+  
        </div>
     </template>
     
@@ -42,6 +44,9 @@ export default {
     methods:{
       viewDetails(id){
              this.$router.push('/accounting/loan/'+id)
+      },
+      editLoan(id){
+        this.$router.push('/accounting/editloan/'+id)
       }
     }
 }

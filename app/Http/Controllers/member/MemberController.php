@@ -28,7 +28,11 @@ public function getNodeToTree($id){
 }
 public function getNodeToTreeFlat($id){
     $node=Member::descendantsAndSelf($id)->toFlatTree();
-    return $node;
+    $result = Member::descendantsOf($id)->toFlatTree();
+    return response()->json([
+        "member" => $node,
+        "num_downLines"=>count($result)
+    ], 200);
 }
 
 public function show($id)
@@ -64,50 +68,72 @@ public function update(Request $request, $id){
         }
         else{
             
-            $member=Member::find($id);  
-            $member->title=$request->first_name.' '.$request->last_name;
-            $member->first_name=$request->first_name;
-            $member->middle_name= $request->middle_name;
-            $member->last_name=$request->last_name;
-            $member->mobile_no= $request->mobile_no;
-            $member->age=$request->age;
-            $member->address=$request->address;
-            $member->birthdate=$request->birthdate;
-            $member->registration=$request->registration;
-            $member->monthly_amortization=$request->monthly_amortization;
-            $member->image=$request->image;
-            $member->save();
-        
-            $result = Member::where('parent_id',$request->parent_id)->get();
-            $countChilds=count($result);
-    
-            if($countChilds < 2)
-            {
-                $member->parent_id=$request->parent_id;
+            $member=Member::find($id); 
+            if($member->parent_id != $request->parent_id) {
+                $member->title=$request->first_name.' '.$request->last_name;
+                $member->first_name=$request->first_name;
+                $member->middle_name= $request->middle_name;
+                $member->last_name=$request->last_name;
+                $member->mobile_no= $request->mobile_no;
+                $member->age=$request->age;
+                $member->address=$request->address;
+                $member->birthdate=$request->birthdate;
+                $member->registration=$request->registration;
+                $member->monthly_amortization=$request->monthly_amortization;
+                $member->image=$request->image;
                 $member->save();
-          
+            
                 $result = Member::where('parent_id',$request->parent_id)->get();
                 $countChilds=count($result);
         
-                if($countChilds >= 2)
+                if($countChilds < 2)
                 {
-                    $parent=Member::find($request->parent_id);
-                    $parent->className="ToRelease";
-                    $parent->save();
+                    $member->parent_id=$request->parent_id;
+                    $member->save();
+              
+                    $result = Member::where('parent_id',$request->parent_id)->get();
+                    $countChilds=count($result);
+            
+                    if($countChilds >= 2)
+                    {
+                        $parent=Member::find($request->parent_id);
+                        $parent->className="ToRelease";
+                        $parent->save();
+                    }
+                    
+                    return response()->json([
+                        "ok" => true
+                    ], 200);
+    
                 }
-                
+                else
+                {
+                    
+                    return response()->json([
+                        "ok" => false
+                    ], 200);
+                }
+
+            }
+            else{
+                $member->title=$request->first_name.' '.$request->last_name;
+                $member->first_name=$request->first_name;
+                $member->middle_name= $request->middle_name;
+                $member->last_name=$request->last_name;
+                $member->mobile_no= $request->mobile_no;
+                $member->age=$request->age;
+                $member->address=$request->address;
+                $member->birthdate=$request->birthdate;
+                $member->registration=$request->registration;
+                $member->monthly_amortization=$request->monthly_amortization;
+                $member->image=$request->image;
+                $member->save(); 
+
                 return response()->json([
                     "ok" => true
                 ], 200);
-
             }
-            else
-            {
-                
-    return response()->json([
-        "ok" => false
-    ], 200);
-            }
+    
         
            
         }

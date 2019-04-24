@@ -319,7 +319,7 @@ export default {
         .get("/api/member/get/treeFlat/" + this.$route.params.id)
         .then(res => {
           console.log(res.data);
-          this.downlines = res.data;
+          this.downlines = res.data.member;
           this.downlines.forEach(el => {
             el.label = `${el.id} - ${el.first_name} ${el.last_name}`;
             let childCount = 0;
@@ -367,9 +367,15 @@ export default {
                 title: "Save",
                 text: "Save Member Successfully!"
               });
+<<<<<<< HEAD
              // this.$router.push("/member");
                this.getOrgData();
                 this.form = {
+=======
+              //this.$router.push("/member");
+                                  this.getOrgData();
+          this.form = {
+>>>>>>> c5c15257cea93343f55b26ae17a7f1bc02449ffb
             first_name: "",
             middle_name: "",
             last_name: "",
@@ -469,7 +475,12 @@ export default {
   },
   computed: {
     filterParent() {
-      return this.downlines.filter(el => el.childCount < 2);
+      try{
+         return this.downlines.filter(el => el.childCount < 2);
+      }catch(err){
+        console.log(err)
+      }
+     
     }
   },
 

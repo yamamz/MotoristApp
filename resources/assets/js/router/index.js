@@ -18,6 +18,7 @@ import EditMember from '@/views/pages/member/edit'
 import Loan from '@/views/pages/acounting/loan'
 import LoanDetails from '@/views/pages/acounting/loanDetails'
 import AddLoan from '@/views/pages/acounting/addloan'
+import EditLoan from '@/views/pages/acounting/editloan'
 
 
 Vue.use(Router)
@@ -98,8 +99,13 @@ export default new Router({
           component: AddLoan
         }, 
         {
+          path: 'editloan/:loanid',
+          name: 'editloan',
+          component: EditLoan
+        }, 
+        {
           path: 'loan/:loanid',
-          name: 'addloan',
+          name: 'viewloan',
           component: LoanDetails
         }, 
  

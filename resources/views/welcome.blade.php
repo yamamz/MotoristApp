@@ -27,6 +27,7 @@
 	<div id="app"></div>
       <script src="{{ mix('js/app.js') }}"></script>
       <script src="/js/html2canvas.min.js"></script>
+      <script src="/js/orgchart.js"></script>
    
  
 </body>

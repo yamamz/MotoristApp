@@ -40,7 +40,7 @@ export default {
       },
       children: [
         {
-          name: 'loan',
+          name: 'loans',
           url: '/accounting/loans',
           icon: 'icon-list'
         },

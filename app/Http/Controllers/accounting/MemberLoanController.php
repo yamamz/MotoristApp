@@ -93,7 +93,18 @@ class MemberLoanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $loan=MemberLoan::find($id);
+        $loan->member_id=$request->member_id;
+        $loan->term_id=$request->term_id;
+        $loan->principal_amount=$request->principal_amount;
+        $loan->interest_rate=$request->interest_rate;
+        $loan->due_date=$request->due_date;
+        $loan->date_release=$request->date_release;
+        $loan->total_amount_due=$request->total_amount_due;
+        $loan->save();
+        return $loan;
+
+  
     }
 
     /**
