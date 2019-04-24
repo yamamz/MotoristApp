@@ -68,12 +68,12 @@ html, body {
       
      axios.get('/api/member/get/treeFlat/'+this.$route.params.id).then(res=>{
        
-      res.data.forEach(el => {
+      res.data.member.forEach(el => {
          el.pid=el.parent_id
        });
-       this.ds=res.data
+       this.ds=res.data.member
         this.childCounts(this.$route.params.id)
-       window.onload = this.showChart(res.data)
+       window.onload = this.showChart(res.data.member)
        
      })
 

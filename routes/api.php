@@ -54,6 +54,7 @@ Route::group([
     Route::get('motor/all', 'member\MotorController@index');
 
     Route::post('memberloan/create', 'accounting\MemberLoanController@store');
+    Route::post('memberloan/update/{id}', 'accounting\MemberLoanController@update');
     Route::get('memberloan/all', 'accounting\MemberLoanController@index');
     Route::get('memberloan/show/{id}', 'accounting\MemberLoanController@show');
 

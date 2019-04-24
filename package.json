@@ -30,6 +30,7 @@
         "font-awesome": "^4.7.0",
         "html2canvas": "^1.0.0-rc.1",
         "jspdf": "^1.5.3",
+        "pdfmake": "^0.1.54",
         "simple-line-icons": "^2.4.1",
         "vee-element": "^1.0.0-alpha.4",
         "vee-validate": "^2.2.3",

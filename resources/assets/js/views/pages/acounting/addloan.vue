@@ -100,7 +100,7 @@ export default {
             title: 'Save',
             text: 'Save Successfully!'
         });
-       // this.$router.push('/member')
+        this.$router.push('/accounting/loans')
       }).catch(err=>{
          this.$swal({
             type: 'error',
