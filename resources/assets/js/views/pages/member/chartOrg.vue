@@ -367,7 +367,21 @@ export default {
                 title: "Save",
                 text: "Save Member Successfully!"
               });
-              this.$router.push("/member");
+             // this.$router.push("/member");
+               this.getOrgData();
+                this.form = {
+            first_name: "",
+            middle_name: "",
+            last_name: "",
+            mobile_no: "",
+            age: "",
+            address: "",
+            birthdate: "",
+            registration: "",
+            monthly_amortization: "",
+            image: "",
+            parent_id: ""
+          };
             })
             .catch(err => {
               this.$swal({
