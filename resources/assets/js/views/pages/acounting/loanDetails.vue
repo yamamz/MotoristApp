@@ -174,9 +174,9 @@ export default {
         content: [
           {
             stack: [
-              {
-                text: "Visayan Riders Ministry Inc"
-              }
+                      "Visayan Riders Ministry Inc",
+         
+              	{text: 'Payment Statement', style: 'subheader'},
             ],
             style: "header"
           },
@@ -205,7 +205,7 @@ export default {
             ]
           },
           {
-            margin: [0, 0, 0, 10],
+            margin: [0, 0, 0, 0],
             columns: [
               {
                 width: "*",
@@ -222,7 +222,8 @@ export default {
               {
                 width: "*",
                 text: `Amount Due:${this.loan.total_amount_due}`,
-                fontSize: 12
+                fontSize: 12,
+             
                 // alignment: 'right'
               }
             ]
@@ -233,27 +234,54 @@ export default {
               widths: [80, 100, 100, 100, "*"],
               body: [
                 [
-                  { text: "Date", bold: true, style: "tableHeader" },
+                  { text: "Date", bold: true, style: "tableHeader",  color:'white' },
                   {
                     text: "Beginning Balance",
                     bold: true,
-                    style: "tableHeader"
+                    style: "tableHeader",
+                    color:'white'
                   },
-                  { text: "Paid Interest", bold: true, style: "tableHeader" },
-                  { text: "Paid Principal", bold: true, style: "tableHeader" },
-                  { text: "Ending Balance", bold: true, style: "tableHeader" }
+                  { text: "Paid Interest", bold: true, style: "tableHeader",  color:'white' },
+                  { text: "Paid Principal", bold: true, style: "tableHeader",  color:'white' },
+                  { text: "Ending Balance", bold: true, style: "tableHeader",  color:'white' }
                 ]
               ]
             },
+            layout:{
+              	hLineWidth: function (i, node) {
+					return (i === 0 || i === node.table.body.length) ? 1 : 0.5;
+				},
+				vLineWidth: function (i, node) {
+					return (i === 0 || i === node.table.widths.length) ? 1 : 0.5;
+				},
+				hLineColor: function (i, node) {
+					return (i === 0 || i === node.table.body.length) ? 'black' : 'gray';
+				},
+				vLineColor: function (i, node) {
+					return (i === 0 || i === node.table.widths.length) ? 'black' : 'gray';
+				},
+        	fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex == 0) ? '#2196f3' : null;
+				},
+            }
           },
           {
             margin: [0, 0, 0, 3],
             columns: [
               {
-                width: "*",
+                width: 650,
                     bold: true,
-                text: `Balance Interest Due: ${(this.caltotInterest).toFixed(2)}`,
-                fontSize: 12,
+                text: `Balance Interest:`,
+                fontSize: 16,
+                alignment: 'right',
+      
+         
+              },
+              {
+                width: 100,
+                    bold: true,
+                text: `${(this.caltotInterest).toFixed(2)}`,
+                fontSize: 16,
                 alignment: 'right'
               },
               
@@ -263,12 +291,23 @@ export default {
           {
             margin: [0, 0, 0, 3],
             columns: [
+                   {
+                width: 650,
+                    bold: true,
+                text: `Balance Principal:`,
+                fontSize: 16,
+                alignment: 'right',
+      
+         
+              },
               {
-                width: "*",
+             
                 bold: true,
-                text: `Balance Principal Due: ${(this.calcTotprincipalPaid).toFixed(2)}`,
-                fontSize: 12,
-                alignment: 'right'
+                text: `${(this.calcTotprincipalPaid).toFixed(2)}`,
+                fontSize: 16,
+                alignment: 'right',
+                width:100,
+                 decoration: 'underline' 
               },
               
             ] 
@@ -278,11 +317,22 @@ export default {
             margin: [0, 0, 0, 3],
             columns: [
               {
-                width: "*",
+                width: 650,
                     bold: true,
-                text: `Total Balance: ${(this.calcTotprincipalPaid +this.caltotInterest ).toFixed(2)}`,
-                fontSize: 12,
-                alignment: 'right'
+                text: `Total Balance:`,
+                fontSize: 16,
+                alignment: 'right',
+      
+         
+              },
+               {
+                width: 100,
+                    bold: true,
+                text: `${(this.calcTotprincipalPaid +this.caltotInterest ).toFixed(2)}`,
+                fontSize: 16,
+                alignment: 'right',
+                color:'red',
+               
               },
               
             ] 
