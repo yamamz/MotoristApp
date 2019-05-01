@@ -24,6 +24,7 @@
           <el-col :md="12">
             <el-form-item label="Motor Brand">
               <el-select
+              filterable
                 placeholder="please select motor brand"
                 v-model="form1.motor_id"
                 style="width:100%;"
@@ -229,7 +230,7 @@ export default {
   },
   computed: {
     filterParent() {
-      return this.members.filter(el => el.childCount >= 2);
+      return this.members;
     }
   }
 };

@@ -60,6 +60,8 @@
               filterable
               placeholder="Please Select you Upline"
               v-model="form.parent_id">
+               <el-option label="No Upline" value=""></el-option>
+              
                     <el-option v-for="(val,index) in filterParent" :key="index"  :label="`${val.name} ${val.first_name} ${val.last_name}`" :value="val.id">
                 </el-option>
               </el-select>
