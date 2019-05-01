@@ -65,8 +65,24 @@
               <el-input v-model="form1.down_payment" type="number"></el-input>
             </el-form-item>
           </el-col>
+            <el-col :md="12">
+            <el-form-item label="Branch">
+             <el-select
+                placeholder="please select branch"
+                v-model="form1.branch_id"
+                style="width:100%;"
+              >
+                <el-option
+                  v-for="motor in branches"
+                  :key="motor.id"
+                  :value="motor.id"
+                  :label="motor.name"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :md="12">
-            <el-form-item label>
+            <el-form-item label="Loan">
               <el-checkbox v-model="form1.is_loan">Is this a Loan</el-checkbox>
             </el-form-item>
           </el-col>
@@ -108,6 +124,7 @@ export default {
       members: [{ first_name: "", last_name: "" }],
       headers: ["id", "fullname", "motorname", "monthly_due", "Actions"],
       motorreleases: [],
+      branches:[],
       form1: {
         id: null,
         member_id: "",
@@ -116,11 +133,15 @@ export default {
         monthly_due: 0,
         date_recieved: null,
         due_date: "",
-        is_loan: false
+        is_loan: false,
+        branch_id:""
       }
     };
   },
   mounted() {
+        axios.get('/api/branch/all').then(res=>{
+        this.branches=res.data
+    })
     axios.get("/api/motor/all").then(res => {
       console.log(res.data);
       this.motors = res.data;
