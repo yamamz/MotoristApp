@@ -41,19 +41,22 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
         search: '',
         members:[],
         headers: ['id','first_name','last_name', 'address','monthly_amortization','Actions'],
+        countloan:0
        
       }
     },
     methods:{
+      
       viewChart(member){
         this.$router.push('/member/chart/'+member)
       },
       editMember(member){
-  this.$router.push('/member/edit/'+member)
+      this.$router.push('/member/edit/'+member)
       },
       printMembers(){
-let mems=this.members.sort((a, b) => a.last_name < b.last_name ? -1 : (a.last_name > b.last_name ? 1 : 0))
-console.log(mems)
+      let mems=this.members.sort((a, b) => a.fullname < b.fullname ? -1 : (a.fullname > b.fullname ? 1 : 0))
+      let filterLoan=this.members.filter(el=>el.loan != null)
+      console.log(mems)
           {
       var dd = {
         pageOrientation: "landscape",
@@ -72,7 +75,7 @@ console.log(mems)
           {
             style: "tableExample",
             table: {
-              widths: [20,"*", "*", 80, 150, "*"],
+              widths: [20,"*", "*", 80, 130, 160,"*"],
               body: [
                 [
                     { text: "#", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
@@ -85,7 +88,9 @@ console.log(mems)
                   },
                   { text: "Contact No.", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Monthly Amortization", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
-                  { text: "Membership Donation Free", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] }
+                  { text: "Membership Donation Free", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "Is Loan", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] }
+             
                 ]
               ]
             },
@@ -109,6 +114,10 @@ console.log(mems)
           },
           {
             text:"Total Members: "+this.members.length,
+            alignment:"right"
+          },
+          {
+            text:"Total Loan Members: "+filterLoan.length,
             alignment:"right"
           }
 
@@ -140,13 +149,25 @@ console.log(mems)
         }
       };
       this.members.forEach((el,index) => {
+        let loan=""
+        let loanCount=0
+
+        if(el.loan == null){
+          loan="Cash"
+        }
+        else{
+          loan= "Loan"
+          loanCount++
+        }
+        this.countloan=loanCount
         dd.content[1].table.body.push([
             { text:index+1 , fontSize: 11,},
           { text: `${el.last_name}, ${el.first_name}`, fontSize: 11, },
           { text: el.address, fontSize: 11,},
           { text: el.mobile_no,alignment: "right", fontSize: 11,},
           { text: (el.monthly_amortization).toFixed(2),alignment: "right", fontSize: 11,},
-          { text: (el.registration).toFixed(2),alignment: "right", fontSize: 11,}
+          { text: (el.registration).toFixed(2),alignment: "right", fontSize: 11,},
+          { text: loan,alignment: "right", fontSize: 11,}
         ]);
       });
 
@@ -155,9 +176,13 @@ console.log(mems)
       }
     },
     created(){
+     
       axios.get('/api/member/all').then(res=>{
       console.log(res.data)
       this.members=res.data
+      this.members.forEach(el=>{
+        el.fullname=`${el.last_name}, ${el.first_name}`
+      })
     })
     // axios.get('/api/member/all/tree').then(res=>{
     //   console.log(res.data)

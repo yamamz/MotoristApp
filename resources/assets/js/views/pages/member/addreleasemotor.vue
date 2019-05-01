@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="top">
       <el-card>
       <h5>Add Motor Release</h5>
       <el-form ref="form1" size="small" label-position="top" :model="form1">
@@ -79,11 +79,20 @@
       </el-form>
     </el-card>
     <el-card>
+            <div slot="header" class="clearfix">
+        <el-button
+          type="primary"
+          style="float:right; margin:2px;"
+          icon="el-icon-printer"
+          size="mini"
+          @click="print"
+        >Print</el-button>
+      </div>
       <v-client-table :data="motorreleases" :columns="headers">
         <template slot="Actions" slot-scope="props">
           <div>
             <el-button size="mini" icon="el-icon-view" circle  type="primary"></el-button>
-            <el-button size="mini" icon="el-icon-edit" circle @click="edit(props.row.id)" type="success"></el-button>
+            <a href="#top"><el-button size="mini" icon="el-icon-edit"  circle @click="edit(props.row.id)" type="success"></el-button></a>
           </div>
         </template>
       </v-client-table>
@@ -136,6 +145,7 @@ export default {
   },
   methods: {
     edit(id){
+      
       let release=this.motorreleases.find(el=>el.id===id)
       console.log(release)
       if(release.is_loan == 1){

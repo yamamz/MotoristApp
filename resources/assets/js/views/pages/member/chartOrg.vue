@@ -42,7 +42,7 @@
               <h4>Downlines</h4>
             </el-col>
             <el-col :md="18" style="color:blue;  text-align: right;">
-              <h4>{{downlinesCount}}</h4>
+              <h4>{{downlinesCount-downline_hidden}}</h4>
             </el-col>
           </el-row>
           <el-row>
@@ -247,15 +247,18 @@
 
 <script>
 import OrgChart from "../../../helper/orgChart";
+import _ from 'lodash'
 export default {
   data() {
     return {
       ds: {},
       member: { first_name: "", last_name: "" },
       downlinesCount: 0,
+      downline_hidden:0,
       upline: {},
       dialogRelease: false,
       dialogAdd: false,
+
       form1: {
         member_id: "",
         down_payment: 0,
@@ -302,8 +305,9 @@ export default {
       axios.get("/api/member/show/" + this.$route.params.id).then(result => {
         this.member = result.data.member;
         console.log(this.member);
-        this.downlinesCount = result.data.num_downLines;
+ 
         this.form.member_id = result.data.member.id;
+        
         if (result.data.member.parent_id != null) {
           axios
             .get("/api/member/show/" + result.data.member.parent_id)
@@ -318,8 +322,16 @@ export default {
       axios
         .get("/api/member/get/treeFlat/" + this.$route.params.id)
         .then(res => {
-          console.log(res.data);
+         console.log(res.data);
+       
           this.downlines = res.data.member;
+     
+
+let downlines_level5=res.data.member.filter(el=>el.level <= res.data.member[0].level + 4)
+
+       this.downlinesCount = downlines_level5.length-1;
+      
+        console.log("downlines"+downlines_level5.length)
           this.downlines.forEach(el => {
             el.label = `${el.id} - ${el.first_name} ${el.last_name}`;
             let childCount = 0;
@@ -338,20 +350,38 @@ export default {
 
       axios.get("/api/member/get/" + this.$route.params.id).then(res => {
         this.ds = res.data[0];
-        //console.log(res.data[0])
+        console.log(res.data[0])
+
+
+
+    //let flatsArr=flatten(5,this.ds)
+    //console.log("flat"+flatsArr.length)
+    var characters = [
+  { 'name': 'barney',  'age': 36, 'blocked': true,children:[
+      { 'name': 'fred',    'age': 40, 'blocked': false },
+        { 'name': 'fred',    'age': 40, 'blocked': false },
+          { 'name': 'fred',    'age': 40, 'blocked': false },
+  ] },
+  { 'name': 'fred',    'age': 40, 'blocked': false },
+  { 'name': 'pebbles', 'age': 1,  'blocked': true }
+];
+    console.log(_.flatten(characters))
 
         let orgchart = new OrgChart({
           chartContainer: "#chart",
           data: this.ds,
           nodeContent: "title",
-          depth: 4,
+          depth: 5,
           zoom: true,
           pan: true,
           exportButton: true,
           toggleSiblingsResp: false,
-           depth: 100,
+     
           exportFilename: "MyOrgChart"
         });
+
+          var nodesSameClass = document.getElementsByClassName('node').length
+         console.log("count"+nodesSameClass)
       });
     },
 
@@ -479,6 +509,10 @@ export default {
   },
 
   mounted() {
+      var parent = document.getElementById("chart");
+
+     //this.downline_hidden=document.querySelectorAll('.node').length;
+
     axios.get("/api/motor/all").then(res => {
       this.motors = res.data;
     });
@@ -500,6 +534,7 @@ export default {
     });
 
     this.getOrgData();
+
   }
 };
 </script>

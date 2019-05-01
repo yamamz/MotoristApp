@@ -14,7 +14,7 @@ class MemberController extends Controller
 
 public function index()
 {
-    $members=Member::all();
+    $members=Member::with('loan')->get();
     return $members;
 }
 public function getAllTree(){
@@ -27,10 +27,17 @@ public function getNodeToTree($id){
     return $node;
 }
 public function getNodeToTreeFlat($id){
+    $flatWithLevel = array();
+
     $node=Member::descendantsAndSelf($id)->toFlatTree();
+    foreach($node as $item){
+        $res=Member::withDepth()->find($item['id']);
+        $item['level']=$res->depth;
+        array_push($flatWithLevel,$item);   
+    }
     $result = Member::descendantsOf($id)->toFlatTree();
     return response()->json([
-        "member" => $node,
+        "member" => $flatWithLevel,
         "num_downLines"=>count($result)
     ], 200);
 }
