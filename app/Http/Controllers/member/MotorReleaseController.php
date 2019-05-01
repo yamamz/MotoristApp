@@ -17,8 +17,8 @@ class MotorReleaseController extends Controller
      */
     public function index()
     {
-        $motorReleases=MotorRelease::all();
-        return $motorReleases;
+        $motorReleases=MotorRelease::with('member','motor')->get();
+        return $motorReleases->toArray();
     }
 
     /**
@@ -40,27 +40,38 @@ class MotorReleaseController extends Controller
 
     public function store(Request $request)
     {
-        // $table->float('monthly_due')->nullable();
-        // $table->date('date_recieved')->nullable();
-        // $table->string('due_date')->nullable();
-        // $table->boolean('is_loan')->nullable();
+        $isMember_exist=MotorRelease::where('member_id',$request->member_id)->exists();
+        if(!$isMember_exist){
+            $date=date_create($request->date_recieved);
+            $date_format=date_format($date,"Y/m/d");
+            $attrs=[
+                    'member_id'=>$request->member_id,
+                    'down_payment'=>$request->down_payment,
+                    'motor_id'=>$request->motor_id,
+                    'monthly_due'=>$request->monthly_due,
+                    'due_date'=>$request->due_date,
+                    'date_recieved'=>$date_format,
+                    'is_loan'=>$request->is_loan,
+            ];
+            $release=MotorRelease::create($attrs);
+    
+            $member=Member::find($release->member_id);
+            $member->className="Release";
+            $member->save();
+        }else{
+            $date=date_create($request->date_recieved);
+            $date_format=date_format($date,"Y/m/d");
+            $release=MotorRelease::where('member_id',$request->member_id)->first();
+            $release->member_id=$request->member_id;
+            $release->down_payment=$request->down_payment;
+            $release->motor_id=$request->motor_id;
+            $release->monthly_due=$request->monthly_due;
+            $release->due_date=$request->due_date;
+            $release->date_recieved=$date_format;
+            $release->is_loan=$request->is_loan;
+            $release->save();
+        }
 
-        $date=date_create($request->date_recieved);
-        $date_format=date_format($date,"Y/m/d");
-        $attrs=[
-                'member_id'=>$request->member_id,
-                'down_payment'=>$request->down_payment,
-                'motor_id'=>$request->motor_id,
-                'monthly_due'=>$request->monthly_due,
-                'due_date'=>$request->due_date,
-                'date_recieved'=>$date_format,
-                'is_loan'=>$request->is_loan,
-        ];
-        $release=MotorRelease::create($attrs);
-
-        $member=Member::find($release->member_id);
-        $member->className="Release";
-        $member->save();
         return $release;
     }
 
@@ -95,7 +106,19 @@ class MotorReleaseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $date=date_create($request->date_recieved);
+        $date_format=date_format($date,"Y/m/d");
+        $release=MotorRelease::find($id);
+        $release->member_id=$request->member_id;
+        $release->down_payment=$request->down_payment;
+        $release->motor_id=$request->motor_id;
+        $release->monthly_due=$request->monthly_due;
+        $release->due_date=$request->due_date;
+        $release->date_recieved=$date_format;
+        $release->is_loan=$request->is_loan;
+        $release->save();
+
+        return $release;
     }
 
     /**

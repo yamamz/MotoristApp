@@ -49,6 +49,7 @@ Route::group([
 
     
     Route::post('motorrelease/create', 'member\MotorReleaseController@store');
+    Route::post('motorrelease/update/{id}', 'member\MotorReleaseController@update');
     Route::get('motorrelease/all', 'member\MotorReleaseController@index');
     Route::post('motor/create', 'member\MotorController@store');
     Route::get('motor/all', 'member\MotorController@index');

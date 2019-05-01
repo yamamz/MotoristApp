@@ -274,8 +274,8 @@ export default {
         age: "",
         address: "",
         birthdate: "",
-        registration: "",
-        monthly_amortization: "",
+        registration: 8000,
+        monthly_amortization: 3000,
         image: "",
         parent_id: ""
       },
@@ -377,8 +377,8 @@ export default {
             age: "",
             address: "",
             birthdate: "",
-            registration: "",
-            monthly_amortization: "",
+            registration: 8000,
+            monthly_amortization: 3000,
             image: "",
             parent_id: ""
           };
@@ -420,8 +420,8 @@ export default {
             age: "",
             address: "",
             birthdate: "",
-            registration: "",
-            monthly_amortization: "",
+            registration: 8000,
+            monthly_amortization: 3000,
             image: "",
             parent_id: ""
           };

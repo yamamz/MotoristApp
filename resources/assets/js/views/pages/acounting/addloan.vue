@@ -72,7 +72,7 @@ export default {
                 date_release:null,
                 due_date:'',
                 total_amount_due:0,
-                principal_amount:0,
+                principal_amount:8000,
                 is_paid:false
 
             },

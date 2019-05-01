@@ -28,6 +28,11 @@ export default {
           url: '/member/add',
           icon: 'icon-notebook'
         },
+        {
+          name: 'motorrelease add',
+          url: '/member/motorrelease/add',
+          icon: 'icon-notebook'
+        },
         
       ]
     },

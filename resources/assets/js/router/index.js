@@ -13,6 +13,7 @@ import Motors from '@/views/pages/motors'
 import Register from '@/views/pages/Register'
 import Members from '@/views/pages/member/members'
 import AddMember from '@/views/pages/member/memberAdd'
+import MotoRelease from '@/views/pages/member/addreleasemotor'
 import Chart from '@/views/pages/member/chartOrg'
 import EditMember from '@/views/pages/member/edit'
 import Loan from '@/views/pages/acounting/loan'
@@ -77,7 +78,12 @@ export default new Router({
           path: 'edit/:memberid',
           name: 'edit member',
           component: EditMember
-        },   
+        },
+        {
+          path: 'motorrelease/add',
+          name: 'motorrelease',
+          component: MotoRelease
+        },    
       ]
     },
     
