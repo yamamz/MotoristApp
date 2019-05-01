@@ -25,14 +25,10 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-
     Route::post('login', 'AuthController@login');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
- 
-
 });
 Route::group([
     'middleware' => 'jwt.auth',
@@ -45,8 +41,6 @@ Route::group([
     Route::get('member/get/{id}','member\MemberController@getNodeToTree');
     Route::get('member/show/{id}','member\MemberController@show');
     Route::post('member/searchByName', 'member\MemberController@searchbyName');
-    
-
     
     Route::post('motorrelease/create', 'member\MotorReleaseController@store');
     Route::post('motorrelease/update/{id}', 'member\MotorReleaseController@update');
@@ -61,8 +55,6 @@ Route::group([
 
     Route::post('loanpayment/create', 'accounting\LoanPaymentController@store');
     Route::get('loanpayment/all', 'accounting\LoanPaymentController@index');
-
-    
 });
 
 Route::post('user/create', 'Auth\RegisterController@register');
