@@ -69,6 +69,8 @@ export default {
   },
   methods: {
     print() {
+       let loanss=this.loans.sort((a, b) => a.date_release < b.date_release ? -1 : (a.date_release > b.date_release ? 1 : 0))
+     
       var dd = {
         pageOrientation: "landscape",
         content: [
@@ -219,7 +221,7 @@ export default {
           // alignment: 'justify'
         }
       };
-      this.loans.forEach((el, index) => {
+      loanss.forEach((el, index) => {
         console.log("nka abot");
         let paid_interest = el.loan_payments.reduce(
           (a, b) => +a + +b.paid_interest,

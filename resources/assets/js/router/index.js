@@ -20,6 +20,7 @@ import Loan from '@/views/pages/acounting/loan'
 import LoanDetails from '@/views/pages/acounting/loanDetails'
 import AddLoan from '@/views/pages/acounting/addloan'
 import EditLoan from '@/views/pages/acounting/editloan'
+import Payable from '@/views/pages/report/payables'
 
 
 Vue.use(Router)
@@ -86,8 +87,18 @@ export default new Router({
         },    
       ]
     },
-    
-
+    {
+path:'/reports',
+name: 'reports',
+component:Full,
+children:[
+  {
+    path:'payables',
+    name:'r-payables',
+    component: Payable
+  }
+]
+    },
     {
       path: '/accounting',
       name: 'accounting',
