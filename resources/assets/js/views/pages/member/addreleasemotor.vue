@@ -251,7 +251,7 @@ export default {
   },
   computed: {
     filterParent() {
-      return this.members;
+      return this.members.filter(el => el.motor_release == null);
     }
   }
 };
