@@ -29,7 +29,7 @@ export default {
           icon: 'icon-notebook'
         },
         {
-          name: 'motorrelease add',
+          name: 'motor release',
           url: '/member/motorrelease/add',
           icon: 'icon-notebook'
         },
@@ -61,7 +61,14 @@ export default {
     {
       name: 'Reports',
       url: '/reports',
-      icon: 'icon-pie-chart'
+      icon: 'icon-pie-chart',
+      children:[{
+        
+          name: 'Generate Payable',
+          url: '/reports/payables',
+          icon: 'icon-list'
+       
+      }]
     },
     {
       divider: true
