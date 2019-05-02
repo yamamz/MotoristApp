@@ -250,7 +250,7 @@ export default {
   },
   computed: {
     filterParent() {
-      return this.members.filter(el => el.childCount >= 2);
+      return this.members.filter(el => el.motor_release == null);
     }
   }
 };

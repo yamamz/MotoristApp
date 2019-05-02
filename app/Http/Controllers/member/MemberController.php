@@ -14,7 +14,7 @@ class MemberController extends Controller
 
 public function index()
 {
-    $members=Member::with('loan')->get();
+    $members=Member::with('loan','motorRelease')->get();
     return $members;
 }
 public function getAllTree(){
