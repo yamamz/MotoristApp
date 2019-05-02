@@ -70,6 +70,7 @@ class MotorReleaseController extends Controller
             $release->due_date=$request->due_date;
             $release->date_recieved=$date_format;
             $release->is_loan=$request->is_loan;
+            $release->branch_id=$request->branch_id;
             $release->save();
         }
 
@@ -117,6 +118,7 @@ class MotorReleaseController extends Controller
         $release->due_date=$request->due_date;
         $release->date_recieved=$date_format;
         $release->is_loan=$request->is_loan;
+        $release->branch_id=$request->branch_id;
         $release->save();
 
         return $release;
