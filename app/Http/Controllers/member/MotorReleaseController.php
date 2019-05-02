@@ -45,6 +45,7 @@ class MotorReleaseController extends Controller
             $date=date_create($request->date_recieved);
             $date_format=date_format($date,"Y/m/d");
             $attrs=[
+                'branch_id'=>$request->branch_id,
                     'member_id'=>$request->member_id,
                     'down_payment'=>$request->down_payment,
                     'motor_id'=>$request->motor_id,
