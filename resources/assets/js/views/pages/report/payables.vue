@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-card>
-                  <v-client-table :data="motorReleases" :columns="headers">
+      <v-client-table :data="motorReleases" :columns="headers">
 
       </v-client-table>
         </el-card>
