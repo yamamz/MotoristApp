@@ -17,4 +17,7 @@ class Member extends Model
     public function loan(){
         return $this->hasOne('App\MemberLoan');
     }
+
+
+
 }

@@ -60,6 +60,9 @@ Route::group([
 });
 
 Route::post('user/create', 'Auth\RegisterController@register');
+Route::get('member/all/withtree', 'member\MemberController@allwithTree');
+
+
 
 
 
