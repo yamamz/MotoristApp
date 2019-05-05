@@ -75,7 +75,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
           {
             style: "tableExample",
             table: {
-              widths: [20,"*", "*", 80, 130, 160,"*"],
+              widths: [20,"*", "*", 80, 60, 80,60],
               body: [
                 [
                     { text: "#", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
@@ -87,8 +87,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
                      margin: [0, 5, 0, 5]
                   },
                   { text: "Contact No.", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
-                  { text: "Monthly Amortization", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
-                  { text: "Membership Donation Free", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "Amortization", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "Donation Free", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Is Loan", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] }
              
                 ]

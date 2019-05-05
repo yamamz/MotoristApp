@@ -15,6 +15,19 @@ class MemberController extends Controller
 public function index()
 {
     $members=Member::with('loan','motorRelease')->get();
+
+    return $members;
+}
+public function allwithTree()
+{
+    $members=Member::with('loan','motorRelease')->get();
+    foreach($members as $item){
+            $item['tree'] = Member::with('loan')->descendantsAndSelf($item->id)->toFlatTree();
+            foreach($item['tree'] as $i){
+                $res=Member::withDepth()->find($i['id']);
+                $i['level']=$res->depth;
+            }
+    }
     return $members;
 }
 public function getAllTree(){
@@ -29,7 +42,7 @@ public function getNodeToTree($id){
 public function getNodeToTreeFlat($id){
     $flatWithLevel = array();
 
-    $node=Member::descendantsAndSelf($id)->toFlatTree();
+    $node=Member::with('loan')->descendantsAndSelf($id)->toFlatTree();
     foreach($node as $item){
         $res=Member::withDepth()->find($item['id']);
         $item['level']=$res->depth;
@@ -67,6 +80,7 @@ public function update(Request $request, $id){
             $member->registration=$request->registration;
             $member->monthly_amortization=$request->monthly_amortization;
             $member->image=$request->image;
+            $member->parent_id=$request->parent_id;
             $member->save();
             return response()->json([
                 "ok" => true
