@@ -82,6 +82,7 @@ public function update(Request $request, $id){
             $member->image=$request->image;
             $member->parent_id=$request->parent_id;
             $member->save();
+            $member->makeRoot()->save();
             return response()->json([
                 "ok" => true
             ], 200);
