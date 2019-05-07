@@ -170,7 +170,7 @@ export default {
   methods: {
     printLoanDetails(obj) {
       var dd = {
-        pageOrientation: "landscape",
+        pageOrientation: "portrait",
         content: [
           {
             stack: [
@@ -269,10 +269,10 @@ export default {
             margin: [0, 0, 0, 3],
             columns: [
               {
-                width: 650,
+                width: "*",
                     bold: true,
                 text: `Balance Interest:`,
-                fontSize: 16,
+                fontSize: 12,
                 alignment: 'right',
       
          
@@ -281,7 +281,7 @@ export default {
                 width: 100,
                     bold: true,
                 text: `${(this.caltotInterest).toFixed(2)}`,
-                fontSize: 16,
+                fontSize: 12,
                 alignment: 'right'
               },
               
@@ -292,10 +292,10 @@ export default {
             margin: [0, 0, 0, 3],
             columns: [
                    {
-                width: 650,
+                width: "*",
                     bold: true,
                 text: `Balance Principal:`,
-                fontSize: 16,
+                fontSize: 12,
                 alignment: 'right',
       
          
@@ -304,7 +304,7 @@ export default {
              
                 bold: true,
                 text: `${(this.calcTotprincipalPaid).toFixed(2)}`,
-                fontSize: 16,
+                fontSize: 12,
                 alignment: 'right',
                 width:100,
                  decoration: 'underline' 
@@ -317,10 +317,10 @@ export default {
             margin: [0, 0, 0, 3],
             columns: [
               {
-                width: 650,
+                width: "*",
                     bold: true,
                 text: `Total Balance:`,
-                fontSize: 16,
+                fontSize: 12,
                 alignment: 'right',
       
          
@@ -329,7 +329,7 @@ export default {
                 width: 100,
                     bold: true,
                 text: `${(this.calcTotprincipalPaid +this.caltotInterest ).toFixed(2)}`,
-                fontSize: 16,
+                fontSize: 12,
                 alignment: 'right',
                 color:'red',
                
