@@ -67,6 +67,7 @@ public function show($id)
 }
 
 public function update(Request $request, $id){
+  //  Member::fixTree();
         if($request->parent_id==null){
             $member=Member::find($id);  
             $member->title=$request->first_name.' '.$request->last_name;
@@ -82,6 +83,7 @@ public function update(Request $request, $id){
             $member->image=$request->image;
             $member->parent_id=$request->parent_id;
             $member->save();
+           // $member->makeRoot()->save();
             return response()->json([
                 "ok" => true
             ], 200);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\accounting;
 use App\Http\Controllers\Controller;
 use App\LoanPayment;
+use App\MemberLoan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -48,6 +49,16 @@ class LoanPaymentController extends Controller
                 ];
 
         $payment=LoanPayment::create($attrs);
+        $loan=MemberLoan::findOrFail($payment->member_loan_id);
+        if($payment->ending_balance==0){
+   
+            $loan->is_paid=true;
+            $loan->save();
+        }
+        else{
+            $loan->is_paid=false;
+            $loan->save();
+        }
         return $payment;
     }
 

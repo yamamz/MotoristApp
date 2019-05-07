@@ -17,7 +17,7 @@ class MotorReleaseController extends Controller
      */
     public function index()
     {
-        $motorReleases=MotorRelease::with('member','motor')->get();
+        $motorReleases=MotorRelease::with('member','motor','branch')->get();
         return $motorReleases->toArray();
     }
 
