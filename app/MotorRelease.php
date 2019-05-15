@@ -14,4 +14,8 @@ class MotorRelease extends Model
     public function motor(){
         return $this->belongsTo('App\Motor');
     }
+    public function branch()
+    {
+        return $this->belongsTo('App\Branch');
+    }
 }
