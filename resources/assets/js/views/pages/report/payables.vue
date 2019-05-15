@@ -96,23 +96,26 @@ export default {
           {
             style: "tableExample",
             table: {
-              widths: [20,60,"*", "*", 80, 60, 80,60,60],
+              widths: [20,40,"*", "*","*","*", 60, 60, 80,60,60],
               body: [
                 [
                   { text: "#", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Branch", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Full Name", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "Contact", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
+                   { text: "Release", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
+              
                   {
                     text: "Unit",
                     bold: true,
                     style: "tableHeader",color:"white",
                      margin: [0, 5, 0, 5]
                   },
-                  { text: "Monthly Due.", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                        { text: "Monthly Due.", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "VRMI Due", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Excess", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Cash Downlines", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
-                    { text: "Loan Downlines", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] }
+                  { text: "Loan Downlines", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] }
              
                 ]
               ]
@@ -176,19 +179,19 @@ export default {
         let all_downlines=el.downlines
         let filter_loan=all_downlines.filter(e=>e.loan != null)
         dd.content[1].table.body.push([
-            { text:index+1 , fontSize: 11,},
-          { text: (el.branch != null) ? el.branch.name : "", fontSize: 11, },
-          { text: `${el.member.last_name}, ${el.member.first_name}`, fontSize: 11, },
-          { text: `${el.motor.brand_name} ${el.motor.description}`, fontSize: 11,},
-          { text: (el.monthly_due).toFixed(2),alignment: "right", fontSize: 11,},
-          { text: (el.member.monthly_amortization).toFixed(2),alignment: "right", fontSize: 11,},
-        
-          { text: (el.monthly_due-el.member.monthly_amortization).toFixed(2),alignment: "right", fontSize: 11,},
-          { text: (all_downlines.length - filter_loan.length),alignment: "right", fontSize: 11,},
-          { text:  filter_loan.length,alignment: "right", fontSize: 11,}
+            { text:index+1 , fontSize: 9,},
+          { text: (el.branch != null) ? el.branch.name : "", fontSize: 9, },
+          { text: `${el.member.last_name}, ${el.member.first_name}`, fontSize: 9, },
+             { text: `${el.member.mobile_no}`, fontSize: 9, },
+                { text: `${el.date_recieved}`, fontSize: 9, },
+          { text: `${el.motor.brand_name} ${el.motor.description}`, fontSize: 9,},
+          { text: (el.monthly_due).toFixed(2),alignment: "right", fontSize: 9,},
+          { text: (el.member.monthly_amortization).toFixed(2),alignment: "right", fontSize: 9,},
+          { text: (el.monthly_due-el.member.monthly_amortization).toFixed(2),alignment: "right", fontSize: 9,},
+          { text: (all_downlines.length - filter_loan.length-1),alignment: "right", fontSize: 9,},
+          { text:  filter_loan.length,alignment: "right", fontSize: 9,}
         ]);
       });
-
       pdfMake.createPdf(dd).open();
       }
       
