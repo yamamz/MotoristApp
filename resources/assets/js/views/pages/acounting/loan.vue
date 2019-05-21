@@ -28,6 +28,13 @@
               @click="editLoan(props.row.id)"
               type="success"
             ></el-button>
+            <el-button
+              size="mini"
+              icon="el-icon-delete"
+              circle
+              @click="deleteLoan(props.row.id)"
+              type="danger"
+            ></el-button>
           </div>
         </template>
       </v-client-table>
@@ -68,9 +75,42 @@ export default {
       .catch(err => console.log(err));
   },
   methods: {
+    deleteLoan(id) {
+       this.$swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          axios.post("/api/memberloan/delete/" + id).then(res => {
+            if (res.data.ok == true) {
+              this.loans.splice(
+                this.loans.findIndex(function(i) {
+                  return i.id === id;
+                }),
+                1
+              );
+               this.$swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+          });
+        }
+      });
+
+      console.log(id);
+    },
     print() {
-       let loanss=this.loans.sort((a, b) => a.date_release < b.date_release ? -1 : (a.date_release > b.date_release ? 1 : 0))
-     
+      let loanss = this.loans.sort((a, b) =>
+        a.date_release < b.date_release
+          ? -1
+          : a.date_release > b.date_release
+          ? 1
+          : 0
+      );
+
       var dd = {
         pageOrientation: "landscape",
         content: [

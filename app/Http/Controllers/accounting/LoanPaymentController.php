@@ -103,7 +103,23 @@ class LoanPaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        try{
+            $payment=LoanPayment::findOrFail($id);
+            $payment->delete();
+            return response()->json([
+                "ok" => true
+            ], 200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                "ok" => false
+            ], 200);
+        }
+
+        
+
+
+        
     }
 }

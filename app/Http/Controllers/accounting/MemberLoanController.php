@@ -116,6 +116,17 @@ class MemberLoanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $loan=MemberLoan::findOrFail($id);
+            $loan->delete();
+            return response()->json([
+                "ok" => true
+            ], 200);
+        }
+        catch(Exception $e){
+            return response()->json([
+                "ok" => false
+            ], 200);
+        }
     }
 }

@@ -49,12 +49,14 @@ Route::group([
     Route::get('motor/all', 'member\MotorController@index');
 
     Route::post('memberloan/create', 'accounting\MemberLoanController@store');
+    Route::post('memberloan/delete/{id}', 'accounting\MemberLoanController@destroy');
     Route::post('memberloan/update/{id}', 'accounting\MemberLoanController@update');
     Route::get('memberloan/all', 'accounting\MemberLoanController@index');
     Route::get('memberloan/show/{id}', 'accounting\MemberLoanController@show');
 
     Route::post('loanpayment/create', 'accounting\LoanPaymentController@store');
     Route::get('loanpayment/all', 'accounting\LoanPaymentController@index');
+    Route::post('loanpayment/delete/{id}', 'accounting\LoanPaymentController@destroy');
     Route::post('branch/create', 'member\BranchController@store');
     Route::get('branch/all', 'member\BranchController@index');
 });
