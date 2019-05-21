@@ -17,6 +17,8 @@
       <div>
         <el-button  size="mini" icon="el-icon-view" circle @click="viewChart(props.row.id)" type="primary"></el-button>
        <el-button  size="mini" icon="el-icon-edit" circle @click="editMember(props.row.id)" type="success"></el-button>
+       <el-button  size="mini" icon="el-icon-delete" circle @click="deleteMember(props.row.id)" type="warning"></el-button>
+   
       </div>
     </template>
     
@@ -46,7 +48,44 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
       }
     },
     methods:{
-      
+
+
+      deleteMember(id){
+        this.$swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          axios.post('/api/member/delete/'+id).then(res => {
+            if (res.data.isDelete == true) {
+              this.members.splice(
+                this.members.findIndex(function(i) {
+                  return i.id === id;
+                }),
+                1
+              );
+               this.$swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+            else{
+            this.$swal.fire("Not Delete!", "Node has children please attatch the children first", "error");
+            }
+            {
+
+            }
+          });
+        }
+      });
+
+      console.log(id);
+
+
+ 
+      },
       viewChart(member){
         this.$router.push('/member/chart/'+member)
       },
