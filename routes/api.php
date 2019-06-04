@@ -44,6 +44,7 @@ Route::group([
     Route::post('member/searchByName', 'member\MemberController@searchbyName');
     
     Route::post('motorrelease/create', 'member\MotorReleaseController@store');
+    Route::post('motorrelease/delete/{id}', 'member\MotorReleaseController@destroy');
     Route::post('motorrelease/update/{id}', 'member\MotorReleaseController@update');
     Route::get('motorrelease/all', 'member\MotorReleaseController@index');
     Route::post('motor/create', 'member\MotorController@store');

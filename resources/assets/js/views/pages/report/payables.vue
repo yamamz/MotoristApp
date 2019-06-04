@@ -96,7 +96,7 @@ export default {
           {
             style: "tableExample",
             table: {
-              widths: [20,40,"*", "*","*","*", 60, 60, 80,60,60],
+              widths: [20,40,"*", 60,50,"*", 60, 60, 80,60,60],
               body: [
                 [
                   { text: "#", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
@@ -188,7 +188,7 @@ export default {
           { text: (el.monthly_due).toFixed(2),alignment: "right", fontSize: 9,},
           { text: (el.member.monthly_amortization).toFixed(2),alignment: "right", fontSize: 9,},
           { text: (el.monthly_due-el.member.monthly_amortization).toFixed(2),alignment: "right", fontSize: 9,},
-          { text: (all_downlines.length - filter_loan.length-1),alignment: "right", fontSize: 9,},
+          { text: ((all_downlines.length) - filter_loan.length),alignment: "right", fontSize: 9,},
           { text:  filter_loan.length,alignment: "right", fontSize: 9,}
         ]);
       });
@@ -219,7 +219,7 @@ export default {
         console.log(member)
         let filtertree=member.tree
      
-        el.downlines=filtertree.filter(e=> e.level <= filtertree[0].level + 4)
+        el.downlines=filtertree.filter(e=> e.depth <= filtertree[0].depth + 4 && e.depth != filtertree[0].depth)
 
       });
     })

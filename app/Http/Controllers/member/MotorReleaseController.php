@@ -132,6 +132,11 @@ class MotorReleaseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $release=MotorRelease::findOrFail($id);
+        $release->delete();
+
+        return response()->json([
+            "ok" => true
+        ], 200);
     }
 }
