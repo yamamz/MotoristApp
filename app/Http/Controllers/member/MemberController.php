@@ -22,13 +22,14 @@ public function allwithTree()
 {
     $members=Member::with('loan','motorRelease')->get();
     foreach($members as $item){
-            $item['tree'] = Member::with('loan')->descendantsAndSelf($item->id)->toFlatTree();
-            foreach($item['tree'] as $i){
-                $res=Member::withDepth()->find($i['id']);
-                $i['level']=$res->depth;
-            }
+        $item['tree'] = Member::withDepth()->with('loan')->descendantsAndSelf($item->id)->toFlatTree();
     }
+
     return $members;
+}
+public function allFlatTree()
+{
+    return $members=Member::get()->toTree();
 }
 public function getAllTree(){
     $members=Member::get()->toTree();
@@ -42,15 +43,11 @@ public function getNodeToTree($id){
 public function getNodeToTreeFlat($id){
     $flatWithLevel = array();
 
-    $node=Member::with('loan')->descendantsAndSelf($id)->toFlatTree();
-    foreach($node as $item){
-        $res=Member::withDepth()->find($item['id']);
-        $item['level']=$res->depth;
-        array_push($flatWithLevel,$item);   
-    }
+    $node=Member::withDepth()->with('loan')->descendantsAndSelf($id)->toFlatTree();
+
     $result = Member::descendantsOf($id)->toFlatTree();
     return response()->json([
-        "member" => $flatWithLevel,
+        "member" => $node,
         "num_downLines"=>count($result)
     ], 200);
 }

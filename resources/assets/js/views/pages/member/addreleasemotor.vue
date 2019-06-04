@@ -101,14 +101,15 @@
           style="float:right; margin:2px;"
           icon="el-icon-printer"
           size="mini"
-          @click="print"
+     
         >Print</el-button>
       </div>
       <v-client-table :data="motorreleases" :columns="headers">
         <template slot="Actions" slot-scope="props">
           <div>
-            <el-button size="mini" icon="el-icon-view" circle  type="primary"></el-button>
+           
             <a href="#top"><el-button size="mini" icon="el-icon-edit"  circle @click="edit(props.row.id)" type="success"></el-button></a>
+          <el-button size="mini" @click="deleteRelease(props.row.id)" icon="el-icon-delete" circle  type="danger"></el-button>
           </div>
         </template>
       </v-client-table>
@@ -165,6 +166,43 @@ export default {
     });
   },
   methods: {
+
+          deleteRelease(id){
+        this.$swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          axios.post('/api/motorrelease/delete/'+id).then(res => {
+            if (res.data.ok == true) {
+              this.motorreleases.splice(
+                this.motorreleases.findIndex(function(i) {
+                  return i.id === id;
+                }),
+                1
+              );
+               this.$swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+            else{
+            this.$swal.fire("Not Delete!", "Node has children please attatch the children first", "error");
+            }
+            {
+
+            }
+          });
+        }
+      });
+
+      console.log(id);
+
+
+ 
+      },
     edit(id){
       
       let release=this.motorreleases.find(el=>el.id===id)
