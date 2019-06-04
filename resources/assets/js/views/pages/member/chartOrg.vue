@@ -327,7 +327,7 @@ export default {
           this.downlines = res.data.member;
      
 
-let downlines_level5=res.data.member.filter(el=>el.level <= res.data.member[0].level + 4)
+let downlines_level5=res.data.member.filter(el=>el.depth <= res.data.member[0].depth + 4)
 
        this.downlinesCount = downlines_level5.length-1;
       
