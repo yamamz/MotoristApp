@@ -76,7 +76,12 @@
             <el-table-column prop="beginning_balance" label="Beginning Balance" width="180"></el-table-column>
             <el-table-column prop="paid_interest" label="Paid Interest"></el-table-column>
             <el-table-column prop="paid_principal" label="Paid Principal"></el-table-column>
-            <el-table-column prop="ending_balance" label="Ending Balance"></el-table-column>
+            <el-table-column label="action">
+                    <template slot-scope="scope">
+      
+        <el-button type="primary" @click="deletePayment(scope.row.id,scope.$index)" size="small">delete</el-button>
+      </template>
+            </el-table-column>
           </el-table>
         </el-col>
       </el-row>
@@ -168,6 +173,18 @@ export default {
     };
   },
   methods: {
+    deletePayment(id,index){
+      axios.post('/api/loanpayment/delete/'+id).then(res=>{
+        if(res.data.ok == true){
+          this.payments.splice(index,1)
+          this.$swal({
+            type: 'success',
+            title: 'Delete',
+            text: 'delete Successfully!'
+        });
+        }
+      })
+    },
     printLoanDetails(obj) {
       var dd = {
         pageOrientation: "portrait",

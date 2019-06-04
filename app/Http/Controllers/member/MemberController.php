@@ -175,6 +175,23 @@ public function searchbyName(Request $request)
     ], 200);
 }
 
+public function destroy($id)
+{
+    $node=Member::findOrFail($id);
+    if($node->isLeaf())
+    {
+        $node->delete();
+        return response()->json([
+            "isDelete" => true
+        ], 200);
+    }
+    else{
+        return response()->json([
+            "isDelete" => false
+        ], 200);
+    }
+}
+
 public function store(Request $request)
 {
 
