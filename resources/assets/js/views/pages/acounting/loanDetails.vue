@@ -353,6 +353,36 @@ export default {
               },
               
             ] 
+          },
+           {
+            margin: [0, 0, 0, 3],
+            columns: [
+              {
+                width: 650,
+                    bold: true,
+                text: `MA. SHEILA PALAPAR`,
+                fontSize: 12,
+                alignment: 'LEFT',
+  
+         
+              }
+              
+            ] 
+          },
+                  {
+            margin: [0, 0, 0, 3],
+            columns: [
+              {
+                width: 100,
+                    bold: true,
+                text: `VRMI Secretary`,
+                fontSize: 10,
+                alignment: 'center',
+  
+         
+              }
+              
+            ] 
           }
         ],
 

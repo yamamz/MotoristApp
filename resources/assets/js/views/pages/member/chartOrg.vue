@@ -397,9 +397,9 @@ let downlines_level5=res.data.member.filter(el=>el.depth <= res.data.member[0].d
                 title: "Save",
                 text: "Save Member Successfully!"
               });
-              //this.$router.push("/member");
-                                  this.getOrgData();
-          this.form = {
+             // this.$router.push("/member");
+               this.getOrgData();
+                this.form = {
             first_name: "",
             middle_name: "",
             last_name: "",
@@ -500,11 +500,11 @@ let downlines_level5=res.data.member.filter(el=>el.depth <= res.data.member[0].d
   computed: {
     filterParent() {
       try{
-         return this.downlines.filter(el => el.childCount < 2);
+        return this.downlines.filter(el => el.childCount < 2);
       }catch(err){
         console.log(err)
       }
-     
+      
     }
   },
 

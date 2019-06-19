@@ -21,7 +21,7 @@ public function index()
 public function allwithTree()
 {
     $members=Member::with('loan','motorRelease')->get();
-    foreach($members as $item){
+    foreach($members as $item){ 
         $item['tree'] = Member::withDepth()->with('loan')->descendantsAndSelf($item->id)->toFlatTree();
     }
 

@@ -10,6 +10,7 @@
           icon="el-icon-printer"
           size="mini"
           @click="printMembers"
+          :disabled="memberss.length==0"
         >Print</el-button>
       </div>
  <v-client-table :data="members" :columns="headers">
@@ -43,7 +44,8 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
         search: '',
         members:[],
         headers: ['id','first_name','last_name', 'address','monthly_amortization','Actions'],
-        countloan:0
+        countloan:0,
+        memberss:[]
        
       }
     },
@@ -93,20 +95,17 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
       this.$router.push('/member/edit/'+member)
       },
       printMembers(){
-      let mems=this.members.sort((a, b) => a.fullname < b.fullname ? -1 : (a.fullname > b.fullname ? 1 : 0))
-      let filterLoan=this.members.filter(el=>el.loan != null)
+      let mems=this.memberss.sort((a, b) => a.hasMotor > b.hasMotor ? -1 : (a.hasMotor < b.hasMotor ? 1 : 0))
+      let filterLoan=this.memberss.filter(el=>el.loan != null)
       console.log(mems)
           {
       var dd = {
         pageOrientation: "landscape",
         content: [
           {
-            stack: [
-              
+            stack: [  
            "Visayan Riders Ministry Inc",
-         
-              	{text: 'Registered Members', style: 'subheader'},
-
+            {text: 'Registered Members', style: 'subheader'}
             ],
             style: "header"
           },
@@ -114,7 +113,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
           {
             style: "tableExample",
             table: {
-              widths: [20,"*", "*", 80, 60, 80,60],
+              widths: [20,"*", "*", 80, 60, 80,30,30,60,60,40],
               body: [
                 [
                     { text: "#", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
@@ -128,8 +127,13 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
                   { text: "Contact No.", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Amortization", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
                   { text: "Donation Free", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
-                  { text: "Is Loan", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] }
-             
+                  { text: "left", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "right", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "has Motor", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "downlines", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+                  { text: "is Loan", bold: true, style: "tableHeader",alignment: "right",color:"white", margin: [0, 5, 0, 5] },
+
+          
                 ]
               ]
             },
@@ -187,7 +191,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
           // alignment: 'justify'
         }
       };
-      this.members.forEach((el,index) => {
+      this.memberss.forEach((el,index) => {
         let loan=""
         let loanCount=0
 
@@ -199,6 +203,32 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
           loanCount++
         }
         this.countloan=loanCount
+      let hasLeft=""
+      let hasRight=""
+      if(el.childs.length >= 1){
+        hasLeft="ok"
+      }else{
+        hasLeft="none"  
+      }
+
+      if(el.childs.length >= 2){
+        hasRight="ok"
+      }else{
+        hasRight="none"
+      }
+        let isLoan=""
+       if(el.loan != null){
+         if(el.loan.is_paid == 1){
+           isLoan="paid"
+         }
+         else{
+           isLoan="yes"
+         }
+       }else{
+         isLoan="no"
+       }
+        // ?"yes":"no"
+
         dd.content[1].table.body.push([
             { text:index+1 , fontSize: 11,},
           { text: `${el.last_name}, ${el.first_name}`, fontSize: 11, },
@@ -206,7 +236,11 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
           { text: el.mobile_no,alignment: "right", fontSize: 11,},
           { text: (el.monthly_amortization).toFixed(2),alignment: "right", fontSize: 11,},
           { text: (el.registration).toFixed(2),alignment: "right", fontSize: 11,},
-          { text: loan,alignment: "right", fontSize: 11,}
+          { text: hasLeft,alignment: "right", fontSize: 11,},
+          { text: hasRight,alignment: "right", fontSize: 11,},
+          { text: el.motor_release != null ?"yes":"none",alignment: "right", fontSize: 11,},
+          { text: el.downlines.length,alignment: "right", fontSize: 11,},
+                            { text:isLoan,alignment: "right", fontSize: 11,},
         ]);
       });
 
@@ -217,16 +251,32 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
     created(){
      
       axios.get('/api/member/all').then(res=>{
-      console.log(res.data)
+      //console.log(res.data)
       this.members=res.data
       this.members.forEach(el=>{
         el.fullname=`${el.last_name}, ${el.first_name}`
       })
     })
-    // axios.get('/api/member/all/tree').then(res=>{
-    //   console.log(res.data)
 
-    // })
+      axios.get("/api/member/all/withtree").then(ress=>{
+      this.memberss=ress.data
+      this.memberss.forEach(el => {
+        el.fullname=`${el.last_name}, ${el.first_name}`
+        el.downlines=el.tree.filter(e=> e.depth <= el.tree[0].depth + 4 && e.depth != el.tree[0].depth)
+        el.childs=el.tree.filter(ee=>ee.parent_id==el.tree[0].id)
+
+        if( el.motor_release != null)
+        {
+          el.hasMotor="yes"
+        }else{
+           el.hasMotor="none"
+        }
+
+      });
+
+      console.log(this.memberss)
+    })
+
     }
 
   }

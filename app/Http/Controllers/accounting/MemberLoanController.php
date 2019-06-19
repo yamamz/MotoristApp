@@ -93,7 +93,6 @@ class MemberLoanController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $loan=MemberLoan::find($id);
         $date=date_create($request->date_release);
         $date_format=date_format($date,"Y/m/d");
@@ -106,7 +105,7 @@ class MemberLoanController extends Controller
         $loan->total_amount_due=$request->total_amount_due;
         $loan->save();
         return $loan;
-    }
+   }
 
     /**
      * Remove the specified resource from storage.

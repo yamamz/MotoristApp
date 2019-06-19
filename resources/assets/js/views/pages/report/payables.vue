@@ -96,7 +96,7 @@ export default {
           {
             style: "tableExample",
             table: {
-              widths: [20,40,"*", "*","*","*", 60, 60, 80,60,60],
+              widths: [20,40,"*", 60,50,"*", 60, 60, 80,60,60],
               body: [
                 [
                   { text: "#", bold: true, style: "tableHeader",color:"white", margin: [0, 5, 0, 5] },
