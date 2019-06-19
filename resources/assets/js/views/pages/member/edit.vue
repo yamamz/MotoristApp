@@ -20,7 +20,14 @@
               <el-input v-model="form.last_name"></el-input>
             </el-form-item>
             </el-col>
-                <el-col :md="16">
+                  <el-col :md="8">
+            <el-form-item label="Location">
+              <el-select  style="width:100%;" v-model="form.location_id">
+                  <el-option v-for="location in locations"  :key="location.id" :value="location.id" :label="location.name"></el-option>
+              </el-select>
+            </el-form-item>
+                  </el-col>
+                <el-col :md="8">
             <el-form-item label="Address">
               <el-input v-model="form.address"></el-input>
             </el-form-item>
@@ -144,12 +151,22 @@ export default {
         registration:'',
         monthly_amortization:'',
         image:'',
-        parent_id:''
+        parent_id:'',
+        location_id:"",
+        account_id:""
       },
-      members:[{first_name:'',last_name:''}]
+      members:[{first_name:'',last_name:''}],
+      locations:[],
+      accounts:[]
     }
   },
   mounted(){
+        axios.get('/api/account/all').then(res=>{
+      this.accounts=res.data
+    })
+        axios.get('/api/location/all').then(res=>{
+      this.locations=res.data
+    })
           axios.get("/api/member/show/" + this.$route.params.memberid).then(res => {
          this.form = res.data.member;
         

@@ -20,7 +20,14 @@
               <el-input v-validate="'required'" name="last_name" v-model="form.last_name"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :md="16">
+               <el-col :md="8">
+            <el-form-item label="Location">
+              <el-select  style="width:100%;" v-model="form.location_id">
+                  <el-option v-for="location in locations"  :key="location.id" :value="location.id" :label="location.name"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :md="8">
             <el-form-item label="Address">
               <el-input v-model="form.address"></el-input>
             </el-form-item>
@@ -92,8 +99,33 @@
               </el-select>
             </el-form-item>
           </el-col>
+    
+          <el-card>
+
+        
+          <el-col :md="24">
+              <el-table :data="form.trasaction_recs">
+      
+                <el-table-column prop="account_name" label="Account">
+
+                </el-table-column>
+                   <el-table-column  label="Debit">
+    <template slot-scope="scope" v-if="scope.row.type== 'debit'">
+      {{ scope.row.ammount }}
+    </template>
+                </el-table-column>
+                <el-table-column prop="ammount" label="Credit">
+                        <template slot-scope="scope" v-if="scope.row.type== 'credit'">
+      {{ scope.row.ammount }}
+    </template>
+                </el-table-column>
+              </el-table>
+          </el-col>
+            </el-card>
+            <br>
           <el-col :md="8">
-            <el-button @click="saveMember" type="success" size="small">Add Member</el-button>
+            <el-button :disabled="debitamt != creditamt || (debitamt == 0 || creditamt == 0)" @click="saveMember" type="success" size="small">Add Member</el-button>
+                <el-button @click="dialogAdd=true" type="primary" size="small">Add Journal Entry</el-button>
           </el-col>
           <el-col :md="16">
               <template  v-show="errors.any()">
@@ -110,6 +142,37 @@
         </el-row>
       </el-form>
     </el-card>
+
+  <el-dialog title="Add Journal Entry" :visible.sync="dialogAdd" width="40%">
+      <el-form ref="form1" :model="form1" size="small" label-position="top">
+        <el-row :gutter="5">
+               <el-col :md="24">
+              <el-form-item label="account">
+              <el-select style="width:100%;" placeholder="Select Account" v-model="form1.account">
+                <el-option v-for="account in accounts" :key="account.id" :label="`${account.account_code} ${account.name}`" :value="account"></el-option>  
+              </el-select>
+              </el-form-item>
+            </el-col> 
+          <el-col :md="12">
+            <el-form-item label="Type">
+              <el-select style="width:100%;" placeholder="Select Type" v-model="form1.type">
+                <el-option v-for="type in types" :key="type" :label="type" :value="type"></el-option>  
+              </el-select>
+              </el-form-item>
+            </el-col> 
+                 <el-col :md="12">
+            <el-form-item label="Ammount">
+              <el-input style="width:100%;" placeholder="Enter Ammount" v-model="form1.ammount">
+                  </el-input>
+              </el-form-item>
+            </el-col>
+            <el-button type="primary" @click="addJournal" size="small">Add</el-button>  
+       
+
+        </el-row>
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -158,6 +221,14 @@ export default {
         first_name: 'required',
     
       },
+      dialogAdd:false,
+      types:["debit","credit"],
+      form1:{
+        ammount:8000,
+        type:"",
+        account:null,
+
+      },
       form: {
         first_name: "",
         middle_name: "",
@@ -169,12 +240,26 @@ export default {
         registration: 8000,
         monthly_amortization: 3000,
         image: "",
-        parent_id: ""
+        parent_id: "",
+        account_id:"",
+        location_id:"",
+        trasaction_recs:[]
       },
-      members: [{ first_name: "", last_name: "" }]
+      members: [{ first_name: "", last_name: "" }],
+      accounts:[],
+      locations:[],
+      debitamt:0,
+      creditamt:0
     };
   },
   mounted() {
+
+    axios.get('/api/account/all').then(res=>{
+      this.accounts=res.data
+    })
+        axios.get('/api/location/all').then(res=>{
+      this.locations=res.data
+    })
     axios.get("/api/member/all").then(res => {
       console.log(res.data);
       this.members = res.data;
@@ -192,6 +277,30 @@ export default {
   },
 
   methods: {
+    addJournal(){
+      this.form.trasaction_recs.push({type:this.form1.type,account_id:this.form1.account.id,account_name:`${this.form1.account.account_code} ${this.form1.account.name}`,ammount:this.form1.ammount})
+    
+          this.form1={
+        ammount:8000,
+        type:"",
+        account:"",
+      }
+        let debit=0
+        let credit=0
+        this.form.trasaction_recs.forEach(el=>{
+          if(el.type=='debit'){
+            debit=debit+el.ammount
+          }else{
+            credit=credit+el.ammount
+          }
+ 
+
+        })
+                 this.debitamt=debit
+                 this.creditamt=credit
+      this.dialogAdd=false
+      console.log(this.form.trasaction_recs)
+    },
     saveMember() {
       axios.post("/api/member/searchByName", this.form).then(resp => {
         if (resp.data.exist == false) {

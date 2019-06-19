@@ -79,6 +79,7 @@ public function update(Request $request, $id){
             $member->monthly_amortization=$request->monthly_amortization;
             $member->image=$request->image;
             $member->parent_id=$request->parent_id;
+            $member->location_id=$request->location_id;
             $member->save();
            // $member->makeRoot()->save();
             return response()->json([
@@ -101,6 +102,7 @@ public function update(Request $request, $id){
                 $member->registration=$request->registration;
                 $member->monthly_amortization=$request->monthly_amortization;
                 $member->image=$request->image;
+                $member->location_id=$request->location_id;
                 $member->save();
             
                 $result = Member::where('parent_id',$request->parent_id)->get();
@@ -147,6 +149,7 @@ public function update(Request $request, $id){
                 $member->registration=$request->registration;
                 $member->monthly_amortization=$request->monthly_amortization;
                 $member->image=$request->image;
+                $member->location_id=$request->location_id;
                 $member->save(); 
 
                 return response()->json([
@@ -211,6 +214,7 @@ public function store(Request $request)
         'birthdate'=>$request->birthdate,
         'registration'=>$request->registration,
         'monthly_amortization'=>$request->monthly_amortization,
+        'location_id'=>$request->location_id,
         'image'=>$request->image,
         'className'=>'Pending'
         ];
@@ -236,6 +240,7 @@ public function store(Request $request)
         'birthdate'=>$request->birthdate,
         'registration'=>$request->registration,
         'monthly_amortization'=>$request->monthly_amortization,
+        'location_id'=>$request->location_id,
         'image'=>$request->image,
         'className'=>'Pending'
         ];
@@ -258,5 +263,9 @@ public function store(Request $request)
 
     return $member;
 
+}
+
+public function fixTree(){
+    return $errors= Member::fixTree();
 }
 }

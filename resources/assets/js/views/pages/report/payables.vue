@@ -76,7 +76,7 @@ export default {
       filterMotorrelease.forEach(el=>{
         total_due=total_due+el.monthly_due
       })
-        let filterLoan=this.members.filter(el=>el.loan != null)
+        let filterLoan=this.members.filter(el=>el.loan != null && el.is_paid != 1)
       
           {
       var dd = {
