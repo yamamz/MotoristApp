@@ -2,16 +2,24 @@
 <div>
 <el-card>
          <div slot="header" class="clearfix">
+    
+        <div    style="float:right; margin:2px;">
+          <el-select v-model="location_id">
+            <el-option v-for="location in locations" :label="location.name" :key="location.id" :value="location.id">
 
-        <el-button
+            </el-option>
+          </el-select>
+          <el-button
           type="primary"
-          style="float:right; margin:2px;"
+       
          
           icon="el-icon-printer"
           size="mini"
           @click="printMembers"
           :disabled="memberss.length==0"
         >Print</el-button>
+        </div>
+        
       </div>
  <v-client-table :data="members" :columns="headers">
     <template slot="Actions" slot-scope="props">
@@ -45,7 +53,9 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
         members:[],
         headers: ['id','first_name','last_name', 'address','monthly_amortization','Actions'],
         countloan:0,
-        memberss:[]
+        memberss:[],
+        locations:[],
+        location_id:""
        
       }
     },
@@ -95,8 +105,17 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
       this.$router.push('/member/edit/'+member)
       },
       printMembers(){
-      let mems=this.memberss.sort((a, b) => a.hasMotor > b.hasMotor ? -1 : (a.hasMotor < b.hasMotor ? 1 : 0))
-      let filterLoan=this.memberss.filter(el=>el.loan != null)
+        let memberss=[]
+      if(this.location_id==""){
+        memberss=this.memberss
+       
+      }
+      else{
+        memberss=this.memberss.filter(e=>e.location_id == this.location_id)
+      }
+       let mems=memberss.sort((a, b) => a.hasMotor > b.hasMotor ? -1 : (a.hasMotor < b.hasMotor ? 1 : 0))
+      
+      let filterLoan=memberss.filter(el=>el.loan != null)
       console.log(mems)
           {
       var dd = {
@@ -191,7 +210,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
           // alignment: 'justify'
         }
       };
-      this.memberss.forEach((el,index) => {
+      memberss.forEach((el,index) => {
         let loan=""
         let loanCount=0
 
@@ -249,6 +268,9 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
       }
     },
     created(){
+        axios.get('/api/location/all').then(res=>{
+      this.locations=res.data
+    })
      
       axios.get('/api/member/all').then(res=>{
       //console.log(res.data)
