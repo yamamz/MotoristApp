@@ -24,7 +24,7 @@
     "dependencies": {
         "@c42/vue-orgchart": "^0.2.0",
         "bootstrap-vue": "^2.0.0-rc.18",
-        "chart.js": "2.6.0",
+        "chart.js": "2.9.4",
         "d3": "^5.9.2",
         "element-ui": "^2.7.2",
         "font-awesome": "^4.7.0",
